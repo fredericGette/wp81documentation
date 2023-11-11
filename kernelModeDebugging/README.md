@@ -35,4 +35,5 @@ You can now start the debugger client in the host computer:
 
 C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\kd.exe -k net:port=50000,key=1.2.3.4
 
+![kd](kd.jpg)
 
