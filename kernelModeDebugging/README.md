@@ -37,3 +37,18 @@ C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\kd.exe -k net:port=50000,k
 
 ![kd](kd.jpg)
 
+
+Others BCD configuration:
+
+To display boot menu:
+```
+bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /set {bootloadersettings} bootmenupolicy legacy
+bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /set {bootmgr} displaybootmenu on
+bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /set {bootmgr} timeout 60
+bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /displayorder {default}
+```
+
+To display errors:
+```
+bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {globalsettings} booterrorux Standard
+```
