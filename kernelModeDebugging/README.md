@@ -57,7 +57,7 @@ bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {globalsettings} booterroru
 ```
 
 # Debug with windows 10
-thanks to [Leway213](https://github.com/Leeway213/BSP-aw1689/blob/master/doc/Dev%20Guide.md)   
+Thanks to [Leway213](https://github.com/Leeway213/BSP-aw1689/blob/master/doc/Dev%20Guide.md#2-debug-with-a-virtual-net-over-usb)   
 Create a virtual switch in Hyper-V  
 ![vitualSwitch](HyperV.png)
 Then start VirthEth_RS1.exe
