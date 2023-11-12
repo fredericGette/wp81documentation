@@ -1,3 +1,5 @@
+# Remote debug WindowsPhone 8.1 kernel from Windows 8.1
+
 Add the following files in the target phone (coming from C:\Program Files (x86)\Windows Phone Kits\8.1\MSPackages\Merged\arm\fre\Microsoft.MS_KDNETUSB_ON.MSN.MainOS.spkg):
 ```
 	\windows\System32\drivers\kdnic.sys
@@ -20,7 +22,7 @@ bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {dbgsettings} busparams 1
 
 In the host computer start C:\Program Files (x86)\Microsoft Windows Phone 8 KDBG Connectivity\bin\VirtEth.exe  
 Warning: this version of VirtEth requires "Virtual Machine Network Services" which is not available in Windows 10+. Please use Windows 8.1  
-For Windows 10 use VirthEth_RS1 as indicated at the end of this document.
+For Windows 10 use VirthEth_RS1 as indicated [below](#Debug-with-windows-10).
 
 In case of error, check that "Virtual Machine Network Services" is enable only in one network connection:
 
@@ -39,7 +41,7 @@ C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\kd.exe -k net:port=50000,k
 ![kd](kd.jpg)
 
 
-Others BCD configuration:
+# Others BCD configuration:
 
 To display boot menu:
 ```
@@ -54,7 +56,8 @@ To display errors:
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {globalsettings} booterrorux Standard
 ```
 
-Debug with windows 10, thanks to [Leway213](https://github.com/Leeway213/BSP-aw1689/blob/master/doc/Dev%20Guide.md):  
+# Debug with windows 10
+thanks to [Leway213](https://github.com/Leeway213/BSP-aw1689/blob/master/doc/Dev%20Guide.md)   
 Create a virtual switch in Hyper-V  
 ![vitualSwitch](HyperV.png)
 Then start VirthEth_RS1.exe
