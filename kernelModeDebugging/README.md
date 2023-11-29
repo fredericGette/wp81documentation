@@ -64,7 +64,7 @@ Then start VirthEth_RS1.exe
 
 # Usefull kd command
 
-.sympath C:\Symbols 
+.sympath C:\Symbols  
 .reload  
 k  
 
