@@ -36,7 +36,7 @@ VirtEth should display the following messages:
 
 You can now start the debugger client in the host computer:
 
-C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\kd.exe -k net:port=50000,key=1.2.3.4
+C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\kd.exe -y C:\Symbols -k net:port=50000,key=1.2.3.4
 
 ![kd](kd.jpg)
 
@@ -61,4 +61,10 @@ Thanks to [Leway213](https://github.com/Leeway213/BSP-aw1689/blob/master/doc/Dev
 Create a virtual switch in Hyper-V  
 ![vitualSwitch](HyperV.png)
 Then start VirthEth_RS1.exe
+
+# Usefull kd command
+
+.sympath C:\Symbols 
+.reload  
+k  
 
