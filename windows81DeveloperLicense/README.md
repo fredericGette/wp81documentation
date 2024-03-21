@@ -46,7 +46,7 @@ This is visible with windbg:
 ![windbgWsClient03](windbgWsClient03.JPG)
 - Hit F5 (Go) to let Visual Studio run freely.
 - In Visual Studio, trigger the "developer license check" by trying to debug your project on a WindowsPhone device for example.
-- Now you can see that the function CheckDeveloperLicense of WSClient is called (you can browse the different threads to find the one calling this function)
+- Now you can see that the function CheckDeveloperLicense of WSClient is called (you can browse the different threads to find the one calling this function)  
 ![windbgWsClient04](windbgWsClient04.JPG)
 - You can also hit F10 (Step Over) to follow step-by-step the execution of the function (beware! this is a very long function).
 
