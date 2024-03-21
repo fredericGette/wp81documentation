@@ -17,7 +17,7 @@ En after having failed to contact the license server, you get this error message
 ## Solution
 
 > [!CAUTION]
-> You may loss usage of your computer !
+> You may lost the usage of your computer !
 > Make a copy of your files before doing the following actions 
 > and never do this if your disk contains important data !!
 
@@ -97,7 +97,7 @@ __Note__: we can do the same modification in the "System32" version of WSClient.
 ![Get-WindowsDeveloperLicense02](Get-WindowsDeveloperLicense02.JPG)
 
 > [!CAUTION]
-> You may loss usage of your computer !
+> You may lost the usage of your computer !
 > Make a copy of your files before doing the following actions 
 > and never do this if your disk contains important data !!
 
