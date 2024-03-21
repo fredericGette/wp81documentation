@@ -15,6 +15,12 @@ En after having failed to contact the license server, you get this error message
 ![Error80245004](devLicenseError80245004.JPG)
 
 ## Solution
+
+> [!CAUTION]
+> You may loss usage of your computer !
+> Make a copy of your files before doing the following actions 
+> and never do this if your disk contains important data !!
+
 Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash ????)
 by this [one](SysWOW64/WSClient.dll) (SHA256 Hash 35ABD0312844D715EA96AEEDE3396DCB7B5C7C9008C0FAE072F6340DFD135C10)  
 or use a disk editor (like [HxD](https://mh-nexus.de/en/hxd/)) to search and replace the following bytes in your disk (you should find only one occurrence of it):  
@@ -89,6 +95,11 @@ By changing this value to 0x00000000 we can transform it into a "success":
 
 __Note__: we can do the same modification in the "System32" version of WSClient.dll
 ![Get-WindowsDeveloperLicense02](Get-WindowsDeveloperLicense02.JPG)
+
+> [!CAUTION]
+> You may loss usage of your computer !
+> Make a copy of your files before doing the following actions 
+> and never do this if your disk contains important data !!
 
 Replace file C:\Windows\System32\WSClient.dll (SHA256 Hash ????)
 by this [one](System32/WSClient.dll) (SHA256 Hash 32CB2F1E08FC3542CC0AC0C76EBA8B4CB4815D01999605BA3CCA7CFDF1991385)  
