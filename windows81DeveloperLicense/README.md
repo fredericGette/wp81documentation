@@ -18,7 +18,7 @@ En after having failed to contact the license server, you get this error message
 
 > [!CAUTION]
 > You may lost the usage of your computer !
-> Make a copy of your files before doing the following actions 
+> Make a copy of your files on another support before doing the following actions 
 > and never do this if your disk contains important data !!
 
 Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash ????)
@@ -98,7 +98,7 @@ __Note__: we can do the same modification in the "System32" version of WSClient.
 
 > [!CAUTION]
 > You may lost the usage of your computer !
-> Make a copy of your files before doing the following actions 
+> Make a copy of your files on another support before doing the following actions 
 > and never do this if your disk contains important data !!
 
 Replace file C:\Windows\System32\WSClient.dll (SHA256 Hash ????)
