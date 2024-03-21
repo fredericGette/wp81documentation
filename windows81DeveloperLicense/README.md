@@ -45,9 +45,10 @@ This is visible with windbg:
 - Still in the "Command" window of windbg, enter the command `bu WSClient!CheckDeveloperLicense` to put a breakpoint at the beginning of the function `CheckDeveloperLicense`. You could check this in the "Breakpoints" window:
 ![windbgWsClient03](windbgWsClient03.JPG)
 - Hit F5 (Go) to let Visual Studio run freely.
+![windbgWsClient04](windbgWsClient04.JPG)
 - In Visual Studio, trigger the "developer license check" by trying to debug your project on a WindowsPhone device for example.
 - Now you can see that the function CheckDeveloperLicense of WSClient is called (you can browse the different threads to find the one calling this function)  
-![windbgWsClient04](windbgWsClient04.JPG)
+![windbgWsClient05](windbgWsClient05.JPG)
 - You can also hit F10 (Step Over) to follow step-by-step the execution of the function (beware! this is a very long function).
 
 The function `CheckDeveloperLicense` returns an error code:
