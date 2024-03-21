@@ -40,7 +40,7 @@ This is visible with windbg:
 - Start windbg with the PID of the process of Visual Studio in parameter: `windbg -p 5608`
 - In the "Command" window of windbg, list the modules with the command `lm`. You should see WSClient in the result.
 ![windbgWsClient01](windbgWsClient01.JPG)
-- Still in the "Command" window of windbg, list the exported functions of WSClient with `x WSClient!*`. You should see the function `CheckDeveloperLicense`.
+- Still in the "Command" window of windbg, list the exported functions of WSClient with `x WSClient!*`. You should see the function `CheckDeveloperLicense`.  
 ![windbgWsClient02](windbgWsClient02.JPG)
 - Still in the "Command" window of windbg, enter the command `bu WSClient!CheckDeveloperLicense` to put a breakpoint at the beginning of the function `CheckDeveloperLicense`. You could check this in the "Breakpoints" window:
 ![windbgWsClient03](windbgWsClient03.JPG)
