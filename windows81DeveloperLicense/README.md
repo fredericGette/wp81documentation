@@ -54,18 +54,18 @@ This is visible with windbg:
 - Start windbg with the PID of the process of Visual Studio in parameter: `windbg -p 5608`
 - In the "Command" window of windbg, list the modules with the command `lm`. You should see WSClient in the result.
 ![windbgWsClient01](windbgWsClient01.JPG)
-- Still in the "Command" window of windbg, list the exported functions of WSClient with `x WSClient!*`. You should see the function `CheckDeveloperLicense`.  
+- Still in the "Command" window of windbg, list the exported functions of WSClient with `x WSClient!*`. You should see the function CheckDeveloperLicense.  
 ![windbgWsClient02](windbgWsClient02.JPG)
-- Still in the "Command" window of windbg, enter the command `bu WSClient!CheckDeveloperLicense` to put a breakpoint at the beginning of the function `CheckDeveloperLicense`. You could check this in the "Breakpoints" window:
+- Still in the "Command" window of windbg, enter the command `bu WSClient!CheckDeveloperLicense` to put a breakpoint at the beginning of the function CheckDeveloperLicense. You could check this in the "Breakpoints" window:
 ![windbgWsClient03](windbgWsClient03.JPG)
-- Hit F5 (Go) to let Visual Studio run freely.
+- Hit F5 (Go) to let Visual Studio runs freely.
 ![windbgWsClient04](windbgWsClient04.JPG)
 - In Visual Studio, trigger the "developer license check" by trying to debug your project on a WindowsPhone device for example.
 - Now you can see that the function CheckDeveloperLicense of WSClient is called (you can browse the different threads to find the one calling this function)  
 ![windbgWsClient05](windbgWsClient05.JPG)
 - You can also hit F10 (Step Over) to follow step-by-step the execution of the function (beware! this is a very long function).
 
-The function `CheckDeveloperLicense` returns an error code:
+At the end, the function CheckDeveloperLicense returns an error code:
 - ErrorCanceledHR 0x800704C7 
 - ErrorNotFoundHR 0x80070490
 - ErrorExpiredHR 0x80090317
@@ -81,7 +81,7 @@ C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Windows.DeveloperLicense.Co
 C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Windows.DeveloperLicense.Commands.Resources
 ```
 
-In particular, `C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Windows.DeveloperLicense.Commands` contains the code of the cmdlet : `Microsoft.Windows.DeveloperLicense.Commands.dll` which we can easily read with a .NET decompiler (like JustDecompile for example).
+In particular, `C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Windows.DeveloperLicense.Commands` contains `Microsoft.Windows.DeveloperLicense.Commands.dll` which we can easily read with a .NET decompiler (like JustDecompile for example).
 
 The decompiled version of the cmdlet is using some native functions exported by WSClient.dll:  
 ![NativeMethods](NativeMethods.JPG)
@@ -93,10 +93,10 @@ And look also at the native constants to find the different return codes of the 
 ![NativeConstants](NativeConstants.JPG)
 
 > [!NOTE]
-> The Powershell Cmdlet `Get-WindowsDeveloperLicense` is using C:\Windows\System32\WSClient.dll whereas Visual Studio is calling the Wow64 version of this library, but there is very little differences between the two. 
+> The Powershell Cmdlet Get-WindowsDeveloperLicense is using C:\Windows\System32\WSClient.dll whereas Visual Studio is calling the Wow64 version of this library, but there is very little differences between the two. 
 
-With all these information, we can now open the WSClient.dll in a disassembler (like [Ghidra](https://ghidra-sre.org/)) to find a way to change the return code of the function `CheckDeveloperLicense`.  
-Fortunately, there's only one place - near the end of the function - where the return code 'ErrorExpiredHR 0x80090317' is set.
+With all these information, we can now open the WSClient.dll in a disassembler (like [Ghidra](https://ghidra-sre.org/)) to find a way to change the return code of the function CheckDeveloperLicense.  
+Fortunately, there's only one place - near the end of the function - where the return code "ErrorExpiredHR 0x80090317" is set.
 ![Ghidra01](Ghidra01.JPG)
 
 By changing this value to 0x00000000 we can transform it into a "success":
