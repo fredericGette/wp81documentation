@@ -11,7 +11,7 @@ or when you debug it on a windows phone device.
 
 ![renewLicense](renewLicense.JPG)
 
-En after having failed to contact the license server, you get this error message:  
+And after having failed to contact the license server, you get this error message:  
 ![Error80245004](devLicenseError80245004.JPG)
 
 ## Solution
