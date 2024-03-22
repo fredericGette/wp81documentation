@@ -27,6 +27,10 @@ Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash 8922E3DCD3EF74FA071A0
 ![Wow64WSClient](Wow64WSClient.JPG)
 
 by this [one](SysWOW64/WSClient.dll) (SHA256 Hash 35ABD0312844D715EA96AEEDE3396DCB7B5C7C9008C0FAE072F6340DFD135C10)  
+
+> [!NOTE]
+> You have to change the owner and update the permissions on the existing WSClient.dll file before being able to rename or delete it. See [here](https://techcult.com/delete-files-protected-by-trustedinstaller/) for an example.
+
 or use a disk editor (like [HxD](https://mh-nexus.de/en/hxd/)) to search and replace the following bytes in your disk (you should find them only in a WSClient.dll file):  
 | Action | Value |
 | --- | --- |
@@ -88,7 +92,8 @@ We can also take a look inside the GetWindowsDeveloperLicenseCommand to see how 
 And look also at the native constants to find the different return codes of the native functions.
 ![NativeConstants](NativeConstants.JPG)
 
-__Note__: the Powershell Cmdlet `Get-WindowsDeveloperLicense` is using C:\Windows\System32\WSClient.dll whereas Visual Studio is calling the Wow64 version of this library, but there is very little differences between the two.
+> [!NOTE]
+> The Powershell Cmdlet `Get-WindowsDeveloperLicense` is using C:\Windows\System32\WSClient.dll whereas Visual Studio is calling the Wow64 version of this library, but there is very little differences between the two. 
 
 With all these information, we can now open the WSClient.dll in a disassembler (like [Ghidra](https://ghidra-sre.org/)) to find a way to change the return code of the function `CheckDeveloperLicense`.  
 Fortunately, there's only one place - near the end of the function - where the return code 'ErrorExpiredHR 0x80090317' is set.
@@ -97,7 +102,8 @@ Fortunately, there's only one place - near the end of the function - where the r
 By changing this value to 0x00000000 we can transform it into a "success":
 ![Ghidra02](Ghidra02.JPG)
 
-__Note__: we can do the same modification in the "System32" version of WSClient.dll
+
+## We can do the same modification in the "System32" version of WSClient.dll
 ![Get-WindowsDeveloperLicense02](Get-WindowsDeveloperLicense02.JPG)
 
 > [!CAUTION]
