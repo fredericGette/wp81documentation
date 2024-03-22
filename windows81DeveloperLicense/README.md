@@ -21,7 +21,9 @@ And after having failed to contact the license server, you get this error messag
 > Make a copy of your files on another support before doing the following actions 
 > and never do this if your disk contains important data !!
 
-Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash ????)
+Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash 8922E3DCD3EF74FA071A097DBC46CB6608D64EC0D4FAF362DBFD83E82EC01E1E)
+![Wow64WSClient](Wow64WSClient.JPG)
+
 by this [one](SysWOW64/WSClient.dll) (SHA256 Hash 35ABD0312844D715EA96AEEDE3396DCB7B5C7C9008C0FAE072F6340DFD135C10)  
 or use a disk editor (like [HxD](https://mh-nexus.de/en/hxd/)) to search and replace the following bytes in your disk (you should find them only in a WSClient.dll file):  
 | Action | Value |
@@ -101,7 +103,9 @@ __Note__: we can do the same modification in the "System32" version of WSClient.
 > Make a copy of your files on another support before doing the following actions 
 > and never do this if your disk contains important data !!
 
-Replace file C:\Windows\System32\WSClient.dll (SHA256 Hash ????)
+Replace file C:\Windows\System32\WSClient.dll (SHA256 Hash 10EBA5B72A25FFE1D184967050F6DC2233DE4EEA4A1B5D554DED8EC7885040B2)
+![System32WSClient](System32WSClient.JPG)
+
 by this [one](System32/WSClient.dll) (SHA256 Hash 32CB2F1E08FC3542CC0AC0C76EBA8B4CB4815D01999605BA3CCA7CFDF1991385)  
 or use a disk editor (like [HxD](https://mh-nexus.de/en/hxd/)) to search and replace the following bytes in your disk (you should find them only in a WSClient.dll file):  
 | Action | Value |
