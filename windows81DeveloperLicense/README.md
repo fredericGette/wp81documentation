@@ -14,6 +14,8 @@ or when you debug it on a windows phone device.
 And after having failed to contact the license server, you get this error message:  
 ![Error80245004](devLicenseError80245004.JPG)
 
+![deployProject](deployProject.JPG)
+
 ## Solution
 
 > [!CAUTION]
