@@ -26,7 +26,7 @@ And after having failed to contact the license server, you get this error messag
 Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash 8922E3DCD3EF74FA071A097DBC46CB6608D64EC0D4FAF362DBFD83E82EC01E1E)
 ![Wow64WSClient](Wow64WSClient.JPG)
 
-by this [one](SysWOW64/WSClient.dll) (SHA256 Hash 35ABD0312844D715EA96AEEDE3396DCB7B5C7C9008C0FAE072F6340DFD135C10)  
+by this [one](SysWOW64_expired_license/WSClient.dll) (SHA256 Hash 35ABD0312844D715EA96AEEDE3396DCB7B5C7C9008C0FAE072F6340DFD135C10)  
 
 > [!NOTE]
 > You have to change the owner and update the permissions on the existing WSClient.dll file before being able to rename or delete it. See [here](https://techcult.com/delete-files-protected-by-trustedinstaller/) for an example.
@@ -39,7 +39,33 @@ or use a disk editor (like [HxD](https://mh-nexus.de/en/hxd/)) to search and rep
 
 # Case #2: You don't have any "developer license".
 
-TODO  
+You get almost the same error than when you have an expired license.
+
+## Solution
+
+> [!NOTE]
+> This solution works in both case: with an expired license or without license.
+
+
+> [!CAUTION]
+> __You may lost the usage of your computer !__  
+> Make a copy of your files on another support before doing the following actions 
+> and never do this if your disk contains important data !!
+
+Replace file C:\Windows\SysWOW64\WSClient.dll (SHA256 Hash 8922E3DCD3EF74FA071A097DBC46CB6608D64EC0D4FAF362DBFD83E82EC01E1E)
+![Wow64WSClient](Wow64WSClient.JPG)
+
+by this [one](SysWOW64_no_license/WSClient.dll) (SHA256 Hash 92DBDDB766E13DF6A4961EFE2E9FB2A2BF1CACE22452EB787F6C30BC1BFAC7AB)  
+
+> [!NOTE]
+> You have to change the owner and update the permissions on the existing WSClient.dll file before being able to rename or delete it. See [here](https://techcult.com/delete-files-protected-by-trustedinstaller/) for an example.
+
+or use a disk editor (like [HxD](https://mh-nexus.de/en/hxd/)) to search and replace the following bytes in your disk (you should find them only in a WSClient.dll file):  
+| Action | Value |
+| --- | --- |
+| search | `ff e8 f0 7a ff ff 8b 4d fc 8b c7 5f 33 cd 5b e8 8e` |
+| replace by | `ff e8 f0 7a ff ff 8b 4d fc 31 c0 5f 33 cd 5b e8 8e` |
+
 
 # Explanations
 
