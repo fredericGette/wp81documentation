@@ -128,6 +128,43 @@ Fortunately, there's only one place - near the end of the function - where the r
 By changing this value to 0x00000000 we can transform it into a "success":
 ![Ghidra02](Ghidra02.JPG)
 
+The modification for the second case (no developer license) is a little more complicated.  
+After several unsuccessful tests, I figured out how to always return 0x00000000 instead of an error code.  
+As the return code is stored in the `eax` register, we have to set it to zero near the end of the function CheckDeveloperLicense.
+
+See below the last disassembled portion of the function before modification (to obtain this with windbg, use the command `pt` to go to the "return" of the function):  
+```
+58aac587 8bc7            mov     eax,edi
+5881c589 5f              pop     edi
+5881c58a 33cd            xor     ecx,ebp
+5881c58c 5b              pop     ebx
+5881c58d e88ee5feff      call    WSClient!WSpTLRW+0x9b0 (5880ab20)
+5881c592 8be5            mov     esp,ebp
+5881c594 5d              pop     ebp
+5881c595 c20400          ret     4
+```
+The instruction `mov eax,edi` copy the content of the register `edi` into `eax`.
+And when we arrive here without a license, the registers have the following values:  
+```
+58aac587 8bc7            mov     eax,edi
+0:000:x86> r
+eax=00000001 ebx=00000000 ecx=fa5d048f edx=00c50000 esi=0071d968 edi=80070490
+eip=58aac587 esp=0071d760 ebp=0071d924 iopl=0         nv up ei pl zr na pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000246
+```
+We see that edi=80070490 corresponds to the value of the error code "ErrorNotFoundHR".
+
+To force `eax` to zero, we can use the instruction `xor eax,eax`:  
+```
+58aac587 31c0            xor     eax,eax
+5881c589 5f              pop     edi
+5881c58a 33cd            xor     ecx,ebp
+5881c58c 5b              pop     ebx
+5881c58d e88ee5feff      call    WSClient!WSpTLRW+0x9b0 (5880ab20)
+5881c592 8be5            mov     esp,ebp
+5881c594 5d              pop     ebp
+5881c595 c20400          ret     4
+```
 
 ## We can do the same modification in the "System32" version of WSClient.dll
 ![Get-WindowsDeveloperLicense02](Get-WindowsDeveloperLicense02.JPG)
