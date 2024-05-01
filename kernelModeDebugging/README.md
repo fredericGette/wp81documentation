@@ -2,7 +2,6 @@
 
 Add the following files in the target phone (coming from C:\Program Files (x86)\Windows Phone Kits\8.1\MSPackages\Merged\arm\fre\Microsoft.MS_KDNETUSB_ON.MSN.MainOS.spkg):
 ```
-	\windows\System32\drivers\kdnic.sys
 	\windows\System32\kd_02_5143.dll
 	\windows\System32\kdcom.dll
 	\windows\System32\kdnet.dll
@@ -66,5 +65,34 @@ Then start VirthEth_RS1.exe
 
 .sympath C:\Symbols  
 .reload  
+
+See the stack trace:  
 k  
 
+See the list of loaded modules:   
+lm  
+
+Let the windows phone running:
+g  
+
+Break:  
+ctrl+c  
+
+Create an "unresolved" break point:  
+bu wp81wiimote!EvtIoDeviceControl  
+
+List break point:  
+bl  
+
+
+# Notes
+
+When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
+
+If you want to use MTP, turn off kernel-mode debugging for the phone.  
+
+In mass storage mode:  
+
+```
+bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /deletevalue {default} debug
+``` 
