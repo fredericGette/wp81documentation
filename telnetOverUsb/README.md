@@ -10,3 +10,8 @@
 
 ![Inject](wp_ss_20150116_0001.png)
 
+## Forward the port 23 from the phone to the computer
+
+Add a key named `Telnet` and the following values in the registry key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\IpOverUsb` of the computer.  
+
+![Registry](regedit.PNG)
