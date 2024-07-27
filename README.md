@@ -5,6 +5,8 @@ Various documentation about Windows Phone 8.1
 
 [Bypass of the "developer license check"](windows81DeveloperLicense/README.md)
 
+[Telnet over USB](telnetOverUsb/README.md)
+
 ## Miscellaneous
 
 ### Take a screenshoot
