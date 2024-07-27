@@ -8,5 +8,5 @@
 
 ## Install a telnet server on the phone
 
-[Inject](wp_ss_20150116_0001.png)
+![Inject](wp_ss_20150116_0001.png)
 
