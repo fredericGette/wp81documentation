@@ -15,3 +15,12 @@
 Add a key named `Telnet` and the following values in the registry key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\IpOverUsb` of the computer.  
 
 ![Registry](regedit.PNG)
+
+
+Restart the _IP over USB_ service of the computer to load the new configuration.  
+
+![Services](services.PNG)
+
+Check the new entry _Telnet_ is visible in the result of the command `IpOverUsbEnum` of the computer.  
+
+![IpOverUsbEnum](IpOverUsbEnum.PNG)
