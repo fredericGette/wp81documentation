@@ -4,7 +4,7 @@
 
 - [Install a telnet server on the phone](../telnetOverUsb/README.md), in order to run the ftp server.  
 
-## Install a ftp server on the phone
+## Install a FTP server on the phone
 
 Copy the file [ftpd_ctrl20_data21.exe](ftpd_ctrl20_data21.exe) into the folder C:\Windows\System32 of your phone.  
 To do that, copy the file into the shared folder of your phone, then move the file to the correct folder by using a telnet session.  
@@ -37,4 +37,9 @@ From a command console, start the ftp client indicating to connect to the port 2
 Then activate the passive mode with `set passive on`.
 
 ![NcFTP](Capture02.PNG)
+
+> [!WARNING]
+> It looks like it's not possible to transfer a file having a size over 64KB.
+
+![over64KB](Capture04.PNG)
 
