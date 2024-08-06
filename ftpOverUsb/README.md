@@ -16,7 +16,7 @@ To do that, copy the file into the shared folder of your phone, then move the fi
 
 ## Forward the ports 20 and 21 from the phone to the computer
 
-Add two keys named `FtpCtrl` and 'FtpData' in the registry key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\IpOverUsb` of the computer.  
+Add two keys named `FtpCtrl` and `FtpData` in the registry key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\IpOverUsb` of the computer.  
 
 Restart the _IP over USB_ service of the computer to load the new configuration.  
 
@@ -26,7 +26,7 @@ Check the new entries qre visible in the result of the command `IpOverUsbEnum` o
 
 ## Start the ftp server on the phone and start a ftp client on the computer
 
-Example with [NcFTP](https://www.ncftp.com/ncftp/)):  
+Example with [NcFTP](https://www.ncftp.com/ncftp/):  
 
 From a telnet session, start ftpd_ctrl20_data21.exe on the phone.  
 
