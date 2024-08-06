@@ -31,7 +31,7 @@ Example with [NcFTP](https://www.ncftp.com/ncftp/):
 From a telnet session, start ftpd_ctrl20_data21.exe on the phone.  
 
 > [!NOTE]
-> ftpd_ctrl20_data21.exe is a modified version of ftpd.exe where the control port is 20 and the passive data port is always 21. This is because I was not able to modify the .exe to use the port 20 for data. 
+> ftpd_ctrl20_data21.exe is a modified version of ftpd.exe where the control port is 20 and the passive data port is always 21. This is because I was not able to modify the .exe to force the usage of the port 20 for data in _passive mode_. 
 
 From a command console, start the ftp client indicating to connect to the port 20 of 127.0.0.1  
 Then activate the passive mode with `set passive on`.
