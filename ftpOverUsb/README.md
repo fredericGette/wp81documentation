@@ -20,7 +20,7 @@ Add two keys named `FtpCtrl` and `FtpData` in the registry key `HKEY_LOCAL_MACHI
 
 Restart the _IP over USB_ service of the computer to load the new configuration.  
 
-Check the new entries qre visible in the result of the command `IpOverUsbEnum` of the computer.  
+Check the new entries are visible in the result of the command `IpOverUsbEnum` of the computer.  
 
 ![IpOverUsbEnum](Capture01.PNG)
 
