@@ -3,9 +3,13 @@ Various documentation about Windows Phone 8.1
 
 [Kernel debugging](kernelModeDebugging/README.md)
 
+[User mode debugging](userModeDebugging/README.md)
+
 [Bypass of the "developer license check"](windows81DeveloperLicense/README.md)
 
 [Telnet over USB](telnetOverUsb/README.md)
+
+[FTP over USB](ftpOverUsb/README.md)
 
 ## Miscellaneous
 
