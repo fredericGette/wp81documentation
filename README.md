@@ -11,7 +11,7 @@ Various documentation about Windows Phone 8.1
 
 [FTP over USB](ftpOverUsb/README.md)
 
-[Console application development](consoleApplicationBuilding/README.md)
+[Console application development](ConsoleApplicationBuilding/README.md)
 
 ## Miscellaneous
 
