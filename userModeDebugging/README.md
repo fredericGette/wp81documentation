@@ -17,7 +17,11 @@ This port must be already configured in the _IP over USB_ service  of your compu
 
 Start the debug server on the phone. And indicate the port 8888 for the communication.  
 
-![debugServer](Capture01.PNG)
+![debugServer](Capture01A.PNG)
+
+> [!NOTE]
+> You can also start the debug session as a background process as it doesn't log anything.
+> ![debugServer](Capture01B.PNG)
 
 
 Start the debug client on the computer. And indicate the same port for the communication.  
