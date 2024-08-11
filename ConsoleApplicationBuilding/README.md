@@ -18,5 +18,11 @@ Change the Visual Studio version of the project (Library v110 is already present
 First select version v120.  
 ![v120](Capture03A.PNG)
 
-Then you can select version v110.  
+Then you can select version v110 for Windows Phone.  
 ![v110](Capture03B.PNG)
+
+## Deployment
+
+Build the application with `[F7]` to generate the .exe file.  
+Then manually copy this file in the shared folder of the phone: `C:\Data\USERS\Public\Documents`  
+![sharedFolder](Capture04.PNG)
