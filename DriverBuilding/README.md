@@ -68,6 +68,8 @@ Sign the driver:
 ## Deploy and start the driver on the Phone
 
 Copy the .sys file in the shared folder of the phone: `C:\Data\USERS\Public\Documents`  
+> [!NOTE]
+> When you connect your phone with a USB cable, this folder is visible in the Explorer of your computer. And in the phone, this folder is mounted in `C:\Data\USERS\Public\Documents` 
 
 _The rest of the process must be executed on the phone within a telnet session._  
 
