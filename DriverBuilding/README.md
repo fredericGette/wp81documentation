@@ -14,7 +14,7 @@ WPF are the "modern" way to code a "Plug'n'Play aware" kernel driver. But it can
 WDM are the "old" way to code a kernel driver. This kind of driver is called a "legacy" driver because it is coded in the "NT V4 style".  
 But the big advantage of a WDM driver is that it can be started and stopped like a service and it doesn't require to be attached to device.  
 
-## Building on the desktop
+## Building on the computer
 
 Open a Command Prompt in the folder containing your sources.  
 
@@ -33,7 +33,7 @@ Generate the .sys:
 link.exe  /VERSION:"6.3" /INCREMENTAL:NO /LIBPATH:"C:\Program Files (x86)\Windows Phone Kits\8.1\lib\win8\km\ARM" /WX "C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\UM\ARM\armrt.lib" "C:\Program Files (x86)\Windows Kits\8.1\lib\win8\KM\arm\BufferOverflowFastFailK.lib" "C:\Program Files (x86)\Windows Kits\8.1\lib\win8\KM\arm\ntoskrnl.lib" "C:\Program Files (x86)\Windows Kits\8.1\lib\win8\KM\arm\hal.lib" "C:\Program Files (x86)\Windows Kits\8.1\lib\win8\KM\arm\wmilib.lib" "C:\Program Files (x86)\Windows Kits\8.1\lib\wdf\kmdf\arm\1.11\WdfLdr.lib" "C:\Program Files (x86)\Windows Kits\8.1\lib\wdf\kmdf\arm\1.11\WdfDriverEntry.lib" "C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\km\arm\wdmsec.lib" /NODEFAULTLIB /NODEFAULTLIB:oldnames.lib /MANIFEST:NO /DEBUG /SUBSYSTEM:NATIVE,"6.02" /STACK:"0x40000","0x2000" /Driver /OPT:REF /OPT:ICF /ENTRY:"FxDriverEntry" /RELEASE  /MERGE:"_TEXT=.text;_PAGE=PAGE" /MACHINE:ARM /PROFILE /kernel /IGNORE:4078,4221,4198 /osversion:6.3 /pdbcompress /debugtype:pdata driver.obj
 ```
 
-## Signing on the desktop
+## Signing on the computer
 
 Even with "testsigning" activated by bcdedit.exe or with [CMD.Injector](https://github.com/fadilfadz01/CMD.Injector_WP8), you must sign your driver. Otherwise Windows Phone refuses to start it.  
 
@@ -65,7 +65,7 @@ Sign the driver:
 "C:\Program Files (x86)\Windows Kits\8.1\bin\x86\signtool.exe" sign /ph /fd "sha256" /f MySPC.pfx driver.sys
 ```
 
-## Deploy and start the driver on the Phone
+## Deploy and start the driver on the phone
 
 Copy the .sys file in the shared folder of the phone: `C:\Data\USERS\Public\Documents`  
 > [!NOTE]
