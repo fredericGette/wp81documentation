@@ -2,9 +2,9 @@
 
 ## Requirements
 
-- [Install a telnet server on the phone](../telnetOverUsb/README.md), in order to run the debug server.
+- [Install a telnet server on the phone](../telnetOverUsb/README.md), in order to run the process server.
 
-## Install the debug server on the phone
+## Install the process server on the phone
 
 Copy the file [mwdbgsrv.exe](mwdbgsrv.exe) into the folder C:\Windows\System32 of your phone.  
 To do that, copy the file into the shared folder of your phone, then move the file to the correct folder by using a telnet session.  
@@ -15,22 +15,34 @@ This port must be already configured in the _IP over USB_ service  of your compu
 
 ## Start a remote debug session
 
-Start the debug server on the phone. And indicate the port 8888 for the communication.  
+Start the process server on the phone. And indicate the port 8888 for the communication.  
 
-![debugServer](Capture01A.PNG)
+![processServer](Capture01A.PNG)
 
 > [!NOTE]
 > You can also start the debug session as a background process as it doesn't log anything.
-> ![debugServer](Capture01B.PNG)
+> ![processServer](Capture01B.PNG)
 
 
-Start the debug client on the computer. And indicate the same port for the communication.  
+Start the smart client on the computer. And indicate the same port for the communication.  
 In this example, we want to remote debug the executable ftpd.exe of the phone.  
 
-![debugClient](Capture02.PNG)
+![smartClient](Capture02.PNG)
 
 ![debugSession](Capture03.PNG)
 
-## Debug a program with source code
+## Debug a running programm with source code
+
+Start the process server on the phone.  
+![processServer](Capture01A.PNG)
+
+Find the PID of the running process.  
+![findPID](Capture08.PNG)
+
+Start the smart client on the computer. And indicate the PID of the running process.  
+![smartClient](Capture09.PNG)
+
+
+
 
 
