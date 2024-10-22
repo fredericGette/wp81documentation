@@ -36,13 +36,23 @@ In this example, we want to remote debug the executable ftpd.exe of the phone.
 Start the process server on the phone.  
 ![processServer](Capture01A.PNG)
 
-Find the PID of the running process.  
+Find the PID of the running process (2376 is the example below).  
 ![findPID](Capture08.PNG)
 
 Start the smart client on the computer. And indicate the PID of the running process.  
 ![smartClient](Capture09.PNG)
 
+Add the path of the folder containing the .pdb of the executable.  
+![sympath](Capture04.PNG)
 
+Add a breakpoint at the start of a function.  
+![breakpoint](Capture05.PNG)
 
+Continue the execution until the breakpoint.  
+![continue](Capture06.PNG)
+
+WinDbg automatically open the source code when the breakpoint is reached.  
+You can use the command `l+t` to step one source line at a time (instead of one assembly instruction at a time).  
+![sourceCode](Capture07.PNG)
 
 
