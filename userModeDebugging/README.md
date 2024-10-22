@@ -30,3 +30,7 @@ In this example, we want to remote debug the executable ftpd.exe of the phone.
 ![debugClient](Capture02.PNG)
 
 ![debugSession](Capture03.PNG)
+
+## Debug a program with source code
+
+
