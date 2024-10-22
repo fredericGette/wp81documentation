@@ -51,7 +51,7 @@ Add a breakpoint at the start of a function.
 Continue the execution until the breakpoint.  
 ![continue](Capture06.PNG)
 
-WinDbg automatically open the source code when the breakpoint is reached.  
+WinDbg automatically opens the source code when the breakpoint is hit.  
 You can use the command `l+t` to step one source line at a time (instead of one assembly instruction at a time).  
 ![sourceCode](Capture07.PNG)
 
