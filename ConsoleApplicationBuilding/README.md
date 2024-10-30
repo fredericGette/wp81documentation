@@ -21,6 +21,8 @@ First select version v120.
 Then you can select version v110 for Windows Phone.  
 ![v110](Capture03B.PNG)
 
+`C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\arm\mincore.lib`
+
 ## Deployment
 
 Build the application with `[F7]` to generate the .exe file.  
