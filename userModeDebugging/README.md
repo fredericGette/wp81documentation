@@ -55,4 +55,10 @@ WinDbg automatically opens the source code when the breakpoint is hit.
 You can use the command `l+t` to step one source line at a time (instead of one assembly instruction at a time).  
 ![sourceCode](Capture07.PNG)
 
+## Wait for the debugger
 
+You can add the following line in your code to wait for the debugger:  
+
+```C
+while (!IsDebuggerPresent()) Sleep(1000);
+```
