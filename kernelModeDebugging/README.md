@@ -87,6 +87,9 @@ bl
 Step by step:
 p
 
+Display memory:
+dc addr
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
