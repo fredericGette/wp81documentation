@@ -84,6 +84,8 @@ bu wp81wiimote!EvtIoDeviceControl
 List break point:  
 bl  
 
+Step by step:
+p
 
 # Notes
 
