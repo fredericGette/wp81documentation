@@ -84,13 +84,13 @@ bu wp81wiimote!EvtIoDeviceControl
 List break point:  
 bl  
 
-Step over:
+Step over:  
 p
 
-Step into:
+Step into:  
 t
 
-Display memory:
+Display memory:  
 dc addr
 
 # Notes
