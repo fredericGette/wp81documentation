@@ -98,6 +98,14 @@ ed nt!Kd_WIN2000_Mask 0xFFFFFFFF
 Set the r4 register for the current thread to 0xFFFFFFFF:  
 r r4=FFFFFFFF
 
+Step over:  
+p
+
+Step into:  
+t
+
+Display memory:  
+dc addr  
 
 # Notes
 

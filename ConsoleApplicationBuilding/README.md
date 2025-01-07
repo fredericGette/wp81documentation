@@ -21,10 +21,19 @@ First select version v120.
 Then you can select version v110 for Windows Phone.  
 ![v110](Capture03B.PNG)
 
-`C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\arm\mincore.lib`
+
 
 ## Deployment
 
 Build the application with `[F7]` to generate the .exe file.  
 Then manually copy this file in the shared folder of the phone: `C:\Data\USERS\Public\Documents`  
 ![sharedFolder](Capture04.PNG)
+
+## Troobleshoot
+
+If you declare functions with `extern "C"` and get an error during the link, you have to add `C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\arm\mincore.lib` as an *additional dependency* of the Linker.  
+
+![externC](Capture03C.PNG)  
+![linkError](Capture03D.PNG)  
+![addDep1](Capture03E.PNG)  
+![addDep2](Capture03F.PNG)  
