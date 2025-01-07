@@ -84,6 +84,20 @@ bu wp81wiimote!EvtIoDeviceControl
 List break point:  
 bl  
 
+Display the address and name of the symbol "poDebug" of the module "nt":  
+x /2 nt!poDebug
+
+Enter into memory (0x821d3628) the double-word values (4 bytes) specified (0xFFFFFFFF):  
+ed 821d3628 0xFFFFFFFF
+
+Activate kernel debug messages:  
+ed nt!poDebug 0x800  
+ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF  
+ed nt!Kd_WIN2000_Mask 0xFFFFFFFF  
+
+Set the r4 register for the current thread to 0xFFFFFFFF:  
+r r4=FFFFFFFF
+
 
 # Notes
 
