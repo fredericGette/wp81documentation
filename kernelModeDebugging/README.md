@@ -92,6 +92,7 @@ ed 821d3628 0xFFFFFFFF
 
 Activate kernel debug messages:  
 ed nt!poDebug 0x800  
+ed nt!poDebug 0xFFFFFFFE
 ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF  
 ed nt!Kd_WIN2000_Mask 0xFFFFFFFF  
 
@@ -107,6 +108,9 @@ t
 Display memory:  
 dc addr  
 
+Display the address of a module added to a value:  
+?qci2c8930+0x2376
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
@@ -118,3 +122,4 @@ In mass storage mode:
 ```
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /deletevalue {default} debug
 ``` 
+
