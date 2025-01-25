@@ -111,6 +111,11 @@ dc addr
 Display the address of a module added to a value:  
 ?qci2c8930+0x2376
 
+Force load modules  
+!analyze
+
+
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
