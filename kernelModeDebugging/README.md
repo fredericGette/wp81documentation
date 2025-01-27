@@ -63,56 +63,60 @@ Then start VirthEth_RS1.exe
 
 # Usefull kd command
 
-.sympath C:\Symbols  
-.reload  
+`.sympath C:\Symbols`  
+`.reload`  
 
 See the stack trace:  
-k  
+`k`  
 
 See the list of loaded modules:   
-lm  
+`lm`  
+See only loaded module matching a pattern:   
+`lm m oempanel`  
+See the list of loaded modules sorted by name:   
+`lm sm`  
 
 Let the windows phone running:
-g  
+`g`  
 
 Break:  
-ctrl+c  
+`ctrl+c`  
 
 Create an "unresolved" break point:  
-bu wp81wiimote!EvtIoDeviceControl  
+`bu wp81wiimote!EvtIoDeviceControl`  
 
 List break point:  
-bl  
+`bl`  
 
 Display the address and name of the symbol "poDebug" of the module "nt":  
-x /2 nt!poDebug
+`x /2 nt!poDebug`
 
 Enter into memory (0x821d3628) the double-word values (4 bytes) specified (0xFFFFFFFF):  
-ed 821d3628 0xFFFFFFFF
+`ed 821d3628 0xFFFFFFFF`
 
 Activate kernel debug messages:  
-ed nt!poDebug 0x800  
-ed nt!poDebug 0xFFFFFFFE
-ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF  
-ed nt!Kd_WIN2000_Mask 0xFFFFFFFF  
+`ed nt!poDebug 0x800`  
+`ed nt!poDebug 0xFFFFFFFE`
+`ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF`  
+`ed nt!Kd_WIN2000_Mask 0xFFFFFFFF`  
 
 Set the r4 register for the current thread to 0xFFFFFFFF:  
-r r4=FFFFFFFF
+`r r4=FFFFFFFF`
 
 Step over:  
-p
+`p`
 
 Step into:  
-t
+`t`
 
 Display memory:  
-dc addr  
+`dc addr`  
 
 Display the address of a module added to a value:  
-?qci2c8930+0x2376
+`?qci2c8930+0x2376`
 
 Force load modules  
-!analyze
+`!analyze`
 
 
 
