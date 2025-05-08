@@ -3,7 +3,6 @@
 ## Requirements
 
 - Visual Studio 2015 with the Windows Phone SDK.
-  ![visualStudio](Capture00.PNG)
 
 ## Debuging
 
