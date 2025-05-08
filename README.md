@@ -13,6 +13,8 @@ Various documentation about Windows Phone 8.1
 
 [Console application creation](ConsoleApplicationBuilding/README.md)
 
+[XAML application creation](XamlApplicationBuilding/README.md)
+
 [Kernel driver creation](DriverBuilding/README.md)
 
 ## Miscellaneous
