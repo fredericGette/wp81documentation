@@ -11,13 +11,19 @@ Add the following files in the target phone (coming from C:\Program Files (x86)\
 
 Get the IP of the host computer (Example 192.168.1.16).
 
-Change the BCD configuration of the target phone:
+Reboot the phone in *Mass storage* mode, see [Key combinations of Windows Phone 8.1](https://github.com/fredericGette/Lumia520/blob/main/content/windows_keys/README.md).  
+Then open an Admin Command Prompt.  
+And change the BCD configuration of the target phone:
 ```
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /dbgsettings net HOSTIP:192.168.1.16 PORT:50000 KEY:1.2.3.4
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {default} debug on
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {default} dbgtransport kdnet.dll
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD -set {dbgsettings} busparams 1
 ```
+
+>[!NOTE]
+>In this example *F:* is the letter of the *MainOS* disk drive.  You must change it to match the correct letter.  
+>And you must also change the *HOSTIP* to match the IP address of the host computer.  
 
 In the host computer start C:\Program Files (x86)\Microsoft Windows Phone 8 KDBG Connectivity\bin\VirtEth.exe  
 Warning: this version of VirtEth requires "Virtual Machine Network Services" which is not available in Windows 10+. Please use Windows 8.1  
@@ -39,6 +45,8 @@ C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\kd.exe -y C:\Symbols -k ne
 
 ![kd](kd.jpg)
 
+>[!NOTE]
+>You can also use windbg.exe with the same option as kd.exe  
 
 # Others BCD configuration:
 
@@ -61,64 +69,65 @@ Create a virtual switch in Hyper-V
 ![vitualSwitch](HyperV.png)
 Then start VirthEth_RS1.exe
 
-# Usefull kd command
+# Usefull kd/windbg command
 
 `.sympath C:\Symbols`  
 `.reload`  
 
-See the stack trace:  
+See the stack trace  
 `k`  
 
-See the list of loaded modules:   
+See the list of loaded modules  
 `lm`  
-See only loaded module matching a pattern:   
+See only loaded module matching a pattern  
 `lm m oempanel`  
-See the list of loaded modules sorted by name:   
+See the list of loaded modules sorted by name  
 `lm sm`  
 
-Let the windows phone running:
+Let the windows phone running  
 `g`  
 
-Break:  
+Break  
 `ctrl+c`  
 
-Create an "unresolved" break point:  
+Create an "unresolved" break point (you can set the break even before the loading of the module)    
 `bu wp81wiimote!EvtIoDeviceControl`  
 
-List break point:  
+List break point  
 `bl`  
 
-Display the address and name of the symbol "poDebug" of the module "nt":  
+Display the address and name of the symbol "poDebug" of the module "nt"  
 `x /2 nt!poDebug`
 
-Enter into memory (0x821d3628) the double-word values (4 bytes) specified (0xFFFFFFFF):  
+Enter into memory (0x821d3628) the double-word values (4 bytes) specified (0xFFFFFFFF)    
 `ed 821d3628 0xFFFFFFFF`
 
-Activate kernel debug messages:  
+Activate kernel debug messages  
 `ed nt!poDebug 0x800`  
 `ed nt!poDebug 0xFFFFFFFE`
 `ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF`  
 `ed nt!Kd_WIN2000_Mask 0xFFFFFFFF`  
 
-Set the r4 register for the current thread to 0xFFFFFFFF:  
+Set the r4 register for the current thread to 0xFFFFFFFF  
 `r r4=FFFFFFFF`
 
-Step over:  
+Step over   
 `p`
 
-Step into:  
+Step into  
 `t`
 
-Display memory:  
+Display memory  
 `dc addr`  
 
-Display the address of a module added to a value:  
+Display the address of a module added to a value   
 `?qci2c8930+0x2376`
 
 Force load modules  
 `!analyze`
 
-
+Reboot the phone (use with the command line `-d` to break as soon as a kernel module is loaded)   
+`.reboot`
 
 # Notes
 
