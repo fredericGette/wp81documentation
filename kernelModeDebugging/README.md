@@ -189,7 +189,7 @@ Then we have to create a `#typev` block for each log identified by a _MessageNum
 
 ## Use the .tmf file
 
-Use the `-d` option of winddbg to break as soon as possible when the phone starts in order to break before the start of the driver we want to read the logs for example.  
+Use the `-d` option of windbg to break as soon as possible when the phone starts in order to break before the start of the driver we want to read the logs for example.  
 Put a unresolved break point at the start of the DriverEntry function of the driver:  
 ```
 bu qcwcn8930!DriverEntry
