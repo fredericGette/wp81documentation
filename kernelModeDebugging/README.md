@@ -129,6 +129,9 @@ Force load modules
 Reboot the phone (use with the command line `-d` to break as soon as a kernel module is loaded)   
 `.reboot`
 
+List WMI loggers  
+`!wmitrace.strdump`
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
@@ -141,3 +144,97 @@ In mass storage mode:
 bcdedit /store F:\efiesp\efi\Microsoft\Boot\BCD /deletevalue {default} debug
 ``` 
 
+# Use ETW/WPP
+
+Often, kernel drivers are using ETW/WPP as their logging mechanism. Without the orignal .pdb file, it is difficult to read these logs.  
+But we can nevertheless try to make some of these logs readable by manually creating a .tmf file. 
+
+## Find the GUID of the provider
+
+The [provider](https://learn.microsoft.com/en-us/windows-hardware/test/weg/instrumenting-your-code-with-etw#etw-architecture) generates the logs. It is identified by a GUID.   
+Find a call to the function [EtwRegisterClassicProvider](https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/etw/register/registerclassicprovider.htm) or [EtwRegister](https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/etw/register/register.htm), the first parameter of this function is a pointer to the GUID of the provider.  
+
+![EtwRegisterClassicProvider](EtwRegisterClassicProvider.PNG)
+
+## Find the logs
+
+Find the calls to the function [WmiTraceMessage](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-wmitracemessage) and note the value of the _r3_ register. This is a pointer to the _MessageGuid_.  
+Note also the first parameter put in the stack just before the call of the function. This parameter is the _MessageNumber_.  
+The others parameters put in the stack are the parameters of the log (each parameter is composed of 2 parts as indicated in the description of the function).    
+
+![WmiTraceMessage](WmiTraceMessage.PNG)
+
+## Write the .tmf file
+
+Using the information collected previously, we can start to manually write the [.tmf file](https://learn.microsoft.com/en-us/windows-hardware/drivers/devtest/trace-message-format-file):
+
+```
+c1cbcc0f-8890-ecb9-5236-20d1c4d45820 qcwcn8930_guid01
+#typev DriverEntry28 28  "%0!DriverEntry!%10!s!"
+{
+    arg10,ItemString
+}
+```
+
+In this example, `c1cbcc0f-8890-ecb9-5236-20d1c4d45820` is the _MessageGuid_.  
+`qcwcn8930_guid01` is a name given to this class of message (we can choose whatever we want).  
+Then we have to create a `#typev` block for each log identified by a _MessageNumber_.  
+`28` is the _MessageNumber_ and `DriverEntry28` is the name given to this log (we can choose whatever we want).  
+`"%0!DriverEntry!%10!s!"` is the template we want to print.  
+`DriverEntry` is the name of the function where _WmiTraceMessage_ is called.  
+`%0` is a prefix which, by default, contains some information like the process ID, the thread ID and the timestamp of the log.  
+`%10` is the first parameter of the log and we want to print it as a string `!s!`.  
+`arg10` is the name of the first log parameter (we can choose whatever we want).  
+`ItemString` indicates the type of this parameter (here a null-terminated string).  
+
+## Use the .tmf file
+
+Use the `-d` option of winddbg to break as soon as possible when the phone starts in order to break before the start of the driver we want to read the logs for example.  
+Put a unresolved break point at the start of the DriverEntry function of the driver:  
+```
+bu qcwcn8930!DriverEntry
+```
+
+Go to this break point:  
+```
+g
+```
+
+Start a new logger named `log01` (we can choose another name) with _live tracing_ activated (option `-kd`):  
+```
+!wmitrace.start log01 -kd
+```
+>[!NOTE]
+>We cannot start a logger as soon as the phone starts because it depends on some resources created later.  
+>That's why we put a breakpoint just before the place where the logs are generated, in order to create the logger before the first log.  
+
+Enable the provider we are interested in:  
+```
+!wmitrace.enable log01 {98D8E493-33D4-4802-AD80-4DD111760D19} -level 5 -flag 0xFFFFFFFF
+```
+`log01` is the name of our logger.  
+`{98D8E493-33D4-4802-AD80-4DD111760D19}` is the GUID of the provider.  
+`-level 5` is the log level [(5=Verbose)](https://wtrace.net/guides/etw/#description).  
+`-flag 0xFFFFFFFF` don't filter any event (I'm not sure of the purpose of this option).
+
+Use our .tmf file to decode the logs:  
+```
+!wmitrace.tmffile C:\Users\frede\Documents\qcwcn8930.tmf
+```
+
+Let the execution of the driver continue in order to generates logs:  
+```
+g
+```
+
+Example of a log correctly decoded:  
+```
+[1]0004.0084::06/03/2025-14:16:22.979 [qcwcn8930_guid01]!DriverEntry!Enter
+```
+
+Example of a log missing in the .tmf file:  
+```
+Unknown( 58): GUID=c1cbcc0f-8890-ecb9-5236-20d1c4d45820 (No Format Information found).
+```
+`58` is the _MessageNumber_.  
+`c1cbcc0f-8890-ecb9-5236-20d1c4d45820` is the _MessageGuid_. 
