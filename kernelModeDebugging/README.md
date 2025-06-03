@@ -222,7 +222,7 @@ Use our .tmf file to decode the logs:
 !wmitrace.tmffile C:\Users\frede\Documents\qcwcn8930.tmf
 ```
 
-Let the execution of the driver continue in order to generates logs:  
+Let the execution of the driver continues in order to generates logs:  
 ```
 g
 ```
