@@ -175,6 +175,7 @@ c1cbcc0f-8890-ecb9-5236-20d1c4d45820 qcwcn8930_guid01
 
 In this example, `c1cbcc0f-8890-ecb9-5236-20d1c4d45820` is the _MessageGuid_.  
 `qcwcn8930_guid01` is a name given to this class of message (we can choose whatever we want).  
+
 Then we have to create a `#typev` block for each log identified by a _MessageNumber_.  
 `28` is the _MessageNumber_ and `DriverEntry28` is the name given to this log (we can choose whatever we want).  
 `"%0!DriverEntry!%10!s!"` is the template we want to print.  
