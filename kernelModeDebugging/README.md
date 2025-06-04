@@ -87,9 +87,6 @@ See the list of loaded modules sorted by name
 Let the windows phone running  
 `g`  
 
-Break  
-`ctrl+c`  
-
 Create an "unresolved" break point (you can set the break even before the loading of the module)    
 `bu wp81wiimote!EvtIoDeviceControl`  
 
