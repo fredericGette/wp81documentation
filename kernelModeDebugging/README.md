@@ -101,7 +101,7 @@ Enter into memory (0x821d3628) the double-word values (4 bytes) specified (0xFFF
 
 Activate kernel debug messages  
 `ed nt!poDebug 0x800`  
-`ed nt!poDebug 0xFFFFFFFE`
+`ed nt!poDebug 0xFFFFFFFE`  
 `ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF`  
 `ed nt!Kd_WIN2000_Mask 0xFFFFFFFF`  
 
