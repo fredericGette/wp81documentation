@@ -132,6 +132,9 @@ Reboot the phone (use with the command line `-d` to break as soon as a kernel mo
 List WMI loggers  
 `!wmitrace.strdump`
 
+Display information about a WDFIOTARGET handle:  
+`!wdfkd.wdfiotarget 73cb0130`
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
@@ -238,3 +241,15 @@ Unknown( 58): GUID=c1cbcc0f-8890-ecb9-5236-20d1c4d45820 (No Format Information f
 ```
 `58` is the _MessageNumber_.  
 `c1cbcc0f-8890-ecb9-5236-20d1c4d45820` is the _MessageGuid_. 
+
+>[!NOTE]
+>You can also read again the logs after their creation:  
+>```
+>!wmitrace.logdump log01 -tmf C:\Users\frede\Documents\qcwcn8930.tmf
+>``` 
+>And in this case, you don't need to add the option `-kd` when you start your logger.
+
+Resources:  
+https://gist.github.com/mattifestation/4bc43dfbd46429ec18ce60a2ea1bcf3c
+https://github.com/mattifestation/MSFTTraceMessageFormat/blob/master/provcore.tmf
+https://github.com/antoxar/WPPTracingSample/blob/master/sample/WppTracing/WppConfig/Rev1/defaultwpp.ini
