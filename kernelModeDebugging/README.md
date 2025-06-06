@@ -87,9 +87,6 @@ See the list of loaded modules sorted by name
 Let the windows phone running  
 `g`  
 
-Break  
-`ctrl+c`  
-
 Create an "unresolved" break point (you can set the break even before the loading of the module)    
 `bu wp81wiimote!EvtIoDeviceControl`  
 
@@ -104,7 +101,7 @@ Enter into memory (0x821d3628) the double-word values (4 bytes) specified (0xFFF
 
 Activate kernel debug messages  
 `ed nt!poDebug 0x800`  
-`ed nt!poDebug 0xFFFFFFFE`
+`ed nt!poDebug 0xFFFFFFFE`  
 `ed nt!Kd_DEFAULT_Mask 0xFFFFFFFF`  
 `ed nt!Kd_WIN2000_Mask 0xFFFFFFFF`  
 
@@ -181,6 +178,7 @@ c1cbcc0f-8890-ecb9-5236-20d1c4d45820 qcwcn8930_guid01
 
 In this example, `c1cbcc0f-8890-ecb9-5236-20d1c4d45820` is the _MessageGuid_.  
 `qcwcn8930_guid01` is a name given to this class of message (we can choose whatever we want).  
+
 Then we have to create a `#typev` block for each log identified by a _MessageNumber_.  
 `28` is the _MessageNumber_ and `DriverEntry28` is the name given to this log (we can choose whatever we want).  
 `"%0!DriverEntry!%10!s!"` is the template we want to print.  
@@ -192,7 +190,7 @@ Then we have to create a `#typev` block for each log identified by a _MessageNum
 
 ## Use the .tmf file
 
-Use the `-d` option of winddbg to break as soon as possible when the phone starts in order to break before the start of the driver we want to read the logs for example.  
+Use the `-d` option of windbg to break as soon as possible when the phone starts in order to break before the start of the driver we want to read the logs for example.  
 Put a unresolved break point at the start of the DriverEntry function of the driver:  
 ```
 bu qcwcn8930!DriverEntry
@@ -225,7 +223,7 @@ Use our .tmf file to decode the logs:
 !wmitrace.tmffile C:\Users\frede\Documents\qcwcn8930.tmf
 ```
 
-Let the execution of the driver continue in order to generates logs:  
+Let the execution of the driver continues in order to generate the logs:  
 ```
 g
 ```
