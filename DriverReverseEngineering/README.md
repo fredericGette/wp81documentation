@@ -32,7 +32,7 @@
 8. Find a call to `WdfIoTargetQueryForInterface(WDFIOTARGET IoTarget, LPCGUID InterfaceType,[out] PINTERFACE Interface, USHORT Size, USHORT Version,[optional] PVOID InterfaceSpecificData)`	
    - The 2nd parameter is the GUID of a INTERFACE exported by another driver.
    - The 3rd parameter is the a pointer to a structure containing the exported interface (an array of functions)
-9. Execute plugin [FakePDB/Generate .PDB file (with function labels)](https://github.com/Mixaill/FakePDB) to generate a .PDB file for kernel debugging with windbg.
+9. Execute plugin [FakePDB/Generate .PDB file (with function labels)](https://github.com/Mixaill/FakePDB) to generate a .PDB file for [kernel debugging with windbg](/kernelModeDebugging/README.md).
 
 ## Exporting All Pseudocode to a Text File
 
