@@ -3,9 +3,9 @@
 1. Execute plugin "Driver Buddy Reloaded" to find the WDF functions
 2. Find the function calling the WdfDriverCreate -> this is the function DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 3. Find the function calling the WdfDeviceCreate -> this is the function EvtDriverDeviceAdd(WDFDRIVER Driver, PWDFDEVICE_INIT DeviceInit)
-4. Find a call to WdfIoQueueCreate(WDFDEVICE Device,PWDF_IO_QUEUE_CONFIG Config,[optional] PWDF_OBJECT_ATTRIBUTES QueueAttributes,[out, optional] WDFQUEUE *Queue)
-	The 2nd parameter (not including the WdfFdoInitQueryPropertyEx) is a pointer to a WDF_IO_QUEUE_CONFIG
-		The 7th DWORD is a pointer to EvtIoDeviceControl(WDFQUEUE Queue, WDFREQUEST Request, size_t OutputBufferLength, size_t InputBufferLength, ULONG IoControlCode)
+4. Find a call to WdfIoQueueCreate(WDFDEVICE Device,PWDF_IO_QUEUE_CONFIG Config,[optional] PWDF_OBJECT_ATTRIBUTES QueueAttributes,[out, optional] WDFQUEUE *Queue)  
+  The 2nd parameter (not including the WdfFdoInitQueryPropertyEx) is a pointer to a WDF_IO_QUEUE_CONFIG  
+    The 7th DWORD is a pointer to EvtIoDeviceControl(WDFQUEUE Queue, WDFREQUEST Request, size_t OutputBufferLength, size_t InputBufferLength, ULONG IoControlCode)
 5. Find a call to WdfObjectGetTypedContextWorker(WDFOBJECT Handle, PCWDF_OBJECT_CONTEXT_TYPE_INFO TypeInfo)
 	The 2nd parameter (not including the WdfFdoInitQueryPropertyEx) is a pointer to a WDF_OBJECT_CONTEXT_TYPE_INFO
 		The second DWORD of this structure is a pointer to a null terminated ASCII string given the name of the context.
