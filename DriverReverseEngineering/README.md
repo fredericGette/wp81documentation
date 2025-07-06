@@ -1,4 +1,4 @@
-# Tips to decompile a Windows Phone kernel driver
+# Tips to decompile a Windows Phone 8.1 kernel driver
 
 1. Execute plugin [Driver Buddy Reloaded](https://github.com/fredericGette/wp81DriverBuddyReloaded) to find the WDF functions
 2. Find the function calling `WdfDriverCreate`: this is the function `DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)`
