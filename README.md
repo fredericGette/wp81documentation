@@ -17,6 +17,8 @@ Various documentation about Windows Phone 8.1
 
 [Kernel driver creation](DriverBuilding/README.md)
 
+[Kernel driver reverse engineering](DriverReverseEngineering/README.md)
+
 ## Miscellaneous
 
 ### Take a screenshoot
