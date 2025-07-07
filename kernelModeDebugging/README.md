@@ -132,6 +132,14 @@ List WMI loggers
 Display information about a WDFIOTARGET handle:  
 `!wdfkd.wdfiotarget 73cb0130`
 
+Display all the ANSI strings contained in a buffer:  
+`s -sa 8b5c4000 L20000`  
+0x8b5c4000 = address of the buffer  
+0x20000 = size of the buffer  
+
+Display in _GUID format_ the memory at an address:  
+`dt _GUID 8bc9e208`
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  
