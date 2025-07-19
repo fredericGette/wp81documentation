@@ -140,6 +140,9 @@ Display all the ANSI strings contained in a buffer:
 Display in _GUID format_ the memory at an address:  
 `dt _GUID 8bc9e208`
 
+Find the module containing an address:  
+`lm a 8f72fb24`  
+
 # Notes
 
 When a Windows phone is configured to use KDNET over USB, Media Transport Protocol (MTP) is disabled. On the host computer, in File Explorer, you will not see the usual phone folders (Documents, Music, Pictures, and the like).  

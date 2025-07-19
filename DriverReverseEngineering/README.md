@@ -90,3 +90,88 @@ def export_all_pseudocode():
 # Run the export function
 export_all_pseudocode()
 ```
+
+## Print formated GUID
+
+```
+import uuid
+import idaapi
+import idc
+
+def format_guid_from_address(ea):
+    """
+    Reads 16 bytes from the given address (ea) in IDA Pro,
+    assumes they represent a GUID, and formats them into
+    the string {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}.
+
+    Args:
+        ea: The effective address (segment address) in IDA Pro
+            where the 16 bytes of the GUID are located.
+
+    Returns:
+        A string representing the GUID in the specified format,
+        or None if 16 bytes cannot be read from the address.
+    """
+    if not idaapi.is_loaded(ea):
+        print(f"Error: Address 0x{ea:X} is not loaded in the database.")
+        return None
+
+    # Read 16 bytes from the specified address
+    guid_bytes = idc.get_bytes(ea, 16)
+
+    if guid_bytes is None or len(guid_bytes) != 16:
+        print(f"Error: Could not read 16 bytes from address 0x{ea:X}.")
+        return None
+
+    try:
+        # Create a UUID object from the bytes
+        # The uuid.UUID constructor expects bytes in network byte order (big-endian).
+        # Many GUIDs in Windows (and often elsewhere) are stored little-endian.
+        # If your GUIDs appear reversed, you might need to reverse the bytes:
+        # new_uuid = uuid.UUID(bytes_le=guid_bytes)
+        # or new_uuid = uuid.UUID(bytes=guid_bytes[::-1]) if they're little-endian in memory.
+        # For this example, we assume standard network byte order or that the bytes
+        # are already in the correct order for uuid.UUID.
+        new_uuid = uuid.UUID(bytes_le=guid_bytes)
+
+        # Format and return the GUID string
+        return f"{{{new_uuid}}}"
+    except ValueError as e:
+        print(f"Error creating UUID from bytes at 0x{ea:X}: {e}")
+        return None
+
+# --- Example Usage in IDA Pro Python console ---
+# Replace this with the actual address where your GUID bytes are located.
+# For example, if your GUID starts at 0x401000:
+# guid_address = 0x401000
+#
+# Let's use a dummy address for demonstration if you don't have one handy.
+# You MUST change this to a valid address in your IDB containing 16 bytes.
+# For example, let's assume a sample GUID '00112233-4455-6677-8899-AABBCCDDEEFF'
+# stored at 0x140010000 in little-endian in memory:
+#
+# If the bytes at 0x140010000 are:
+# 33 22 11 00 55 44 77 66 88 99 AA BB CC DD EE FF
+#
+# You would need to read them and potentially reorder.
+# The `uuid.UUID` constructor expects the bytes in big-endian for `bytes=`.
+# If your GUID is stored little-endian in memory (common on Windows),
+# you might need to use `uuid.UUID(bytes_le=guid_bytes)` or reverse the
+# first three parts for `bytes=`.
+#
+# Let's assume for simplicity you have a section of 16 bytes
+# that, when interpreted directly, forms a big-endian GUID.
+# If they are little-endian (very common), you would need to adjust.
+
+# Let's define a sample address. YOU NEED TO CHANGE THIS to your actual address.
+# Make sure this address contains 16 consecutive bytes you expect to be a GUID.
+target_address = idc.here() # Use current cursor address as an example
+
+# Get the GUID string
+guid_string = format_guid_from_address(target_address)
+
+if guid_string:
+    print(f"GUID found at 0x{target_address:X}: {guid_string}")
+else:
+    print(f"Failed to retrieve GUID from 0x{target_address:X}")
+```
