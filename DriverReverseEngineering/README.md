@@ -175,3 +175,31 @@ if guid_string:
 else:
     print(f"Failed to retrieve GUID from 0x{target_address:X}")
 ```
+
+## Print current address (to put a break point for example)  
+
+```
+import idaapi
+import idc
+
+def get_function_offset_from_cursor():
+    cursor_ea = idaapi.get_screen_ea() # Get the current cursor address
+
+    # Get the function object at the cursor address
+    func = idaapi.get_func(cursor_ea)
+
+    if func:
+        func_start_ea = func.start_ea
+        func_name = idc.get_func_name(func_start_ea)
+
+        if func_name:
+            offset = cursor_ea - func_start_ea
+            print(f"{func_name}+0x{offset:X}")
+        else:
+            print(f"Could not get function name for address 0x{func_start_ea:X}")
+    else:
+        print("Cursor is not within a function or function start not found.")
+
+if __name__ == '__main__':
+    get_function_offset_from_cursor()
+```	
