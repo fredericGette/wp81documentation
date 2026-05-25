@@ -19,6 +19,8 @@ Various documentation about Windows Phone 8.1
 
 [Kernel driver reverse engineering](DriverReverseEngineering/README.md)
 
+[Performances](Performances/README.md)
+
 ## Miscellaneous
 
 ### Take a screenshoot
