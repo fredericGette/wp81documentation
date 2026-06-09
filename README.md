@@ -11,7 +11,8 @@ Various documentation about Windows Phone 8.1
 
 [FTP over USB](ftpOverUsb/README.md)
 
-[Console application creation](ConsoleApplicationBuilding/README.md)
+[Console application creation](ConsoleApplicationBuilding/README.md)  
+[Console application creation with vscode](ConsoleApplicationBuilding/vscode/README.md)
 
 [XAML application creation](XamlApplicationBuilding/README.md)
 
