@@ -38,31 +38,28 @@ link.exe  /VERSION:"6.3" /INCREMENTAL:NO /LIBPATH:"C:\Program Files (x86)\Window
 Even with "testsigning" activated by bcdedit.exe or with [CMD.Injector](https://github.com/fadilfadz01/CMD.Injector_WP8), you must sign your driver. Otherwise Windows Phone refuses to start it.  
 
 > [!NOTE]
-> The phone must be unlocked by a version 2.9+ of [WPinternals](https://github.com/ReneLergner/WPinternals) to be able to activate the "testsigning" in the BCD registry.  
-
-_The following process is copied from a [StackOverflow](https://stackoverflow.com/a/201277)._  
+> The phone must be unlocked by a version 2.9+ of [WPinternals](https://github.com/ReneLergner/WPinternals) to be able to activate the "testsigning" in the BCD registry.    
 
 Open a Command Prompt in the folder containing your unsigned .sys  
 
-Create a self-signed Certificate Authority (CA):  
+Execute step 1 and 2 only once in your environment. Only step 3 must be executed each time you build the driver.  
+
+1.Create a self-signed Certificate:  
 ```
-"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert.exe" -r -pe -n "CN=My CA" -ss CA -sr CurrentUser -a 
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert.exe" -r -pe -a sha256 -len 2048 -ss PrivateCertStore -n "CN=Wp81TestSigning" -eku 1.3.6.1.5.5.7.3.3 Wp81TestSigning.cer
 ```
 
-Import the CA certificate:  
+> [!NOTE]
+> Extended Key Usage `1.3.6.1.5.5.7.3.3` is the OID (Object Identifier) for Code Signing.
+
+2. Trust the certificate by adding it to Root to makes the chain valid:  
 ```
-certutil -user -addstore Root MyCA.cer
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\certmgr.exe" /add Wp81TestSigning.cer /s /r localMachine root
 ```
 
-Create a code-signing certificate (SPC):  
+3. Sign the driver:  
 ```
-"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert.exe" -pe -n "CN=My SPC" -a sha256 -cy end -sky signature -ic MyCA.cer -iv MyCA.pvk -sv MySPC.pvk MySPC.cer
-"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\pvk2pfx.exe" -pvk MySPC.pvk -spc MySPC.cer -pfx MySPC.pfx
-```
-
-Sign the driver:  
-```
-"C:\Program Files (x86)\Windows Kits\8.1\bin\x86\signtool.exe" sign /ph /fd "sha256" /f MySPC.pfx driver.sys
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x86\signtool.exe" sign /v /fd sha256 /s PrivateCertStore /n Wp81TestSigning MyDriver.sys
 ```
 
 ## Deploy and start the driver on the phone
