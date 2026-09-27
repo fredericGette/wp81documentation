@@ -1,13 +1,12 @@
 # How to build a Windows Phone 8.1 driver with VSCode, LLVM, CMake and Ninja
 
 This guide describes how to set up a kernel-mode **KMDF 1.11** driver project for Windows Phone 8.1 (ARM),
-using the same toolchain as the user-mode [wp81Example](https://github.com/fredericGette/wp81Example): `clang-cl` + `lld-link` driven by CMake and Ninja.  
-The project `wp81BmsFilter` is used as the example throughout; replace its name with your own.
+using the same toolchain as the [console application](https://github.com/fredericGette/wp81documentation/blob/main/ConsoleApplicationBuilding/vscode/README.md): `clang-cl` + `lld-link` driven by CMake and Ninja.  
 
 ## Requirements
 
 - [Install a telnet server on the phone](https://github.com/fredericGette/wp81documentation/tree/main/telnetOverUsb#readme), in order to install and start the driver.
-- [LLVM](https://releases.llvm.org/) (tested with LLVM 19 and 22), installed in `C:\Program Files\LLVM\`.  
+- [LLVM](https://releases.llvm.org/) (tested with LLVM 22), installed in `C:\Program Files\LLVM\`.  
   Make sure `clang-cl.exe` and `lld-link.exe` are present in `C:\Program Files\LLVM\bin\`.
 - [CMake](https://cmake.org/download/) 3.20 or later.
 - [Ninja](https://ninja-build.org/) build system, accessible from the PATH.
@@ -22,8 +21,6 @@ The project `wp81BmsFilter` is used as the example throughout; replace its name 
 - **Windows Phone 8.1 SDK**, providing `wdm.h` and the shared headers it includes, in:
   - `C:\Program Files (x86)\Windows Phone Kits\8.1\Include\um\`
 
-> The Visual Studio 2012 WPSDK used by the user-mode example is **not** needed: a driver links neither the C runtime nor `mincore.lib`.
-
 ## Project structure
 
 ```
@@ -31,7 +28,7 @@ wp81BmsFilter/
 ├── .vscode/
 │   └── c_cpp_properties.json   ← IntelliSense configuration
 ├── src/
-│   ├── BmsFilter.h             ← includes <wdm.h> and <wdf.h>
+│   ├── Driver.h                ← includes <wdm.h> and <wdf.h>
 │   ├── Driver.c                ← DriverEntry, EvtDeviceAdd, queues...
 │   └── ...                     ← other .c files
 ├── CMakeLists.txt              ← build definition
@@ -44,7 +41,7 @@ Drivers are written in C: the project is declared as `C` only, and every `src/*.
 
 The preset selects `clang-cl` as the C compiler, targets `armv7-pc-windows-msvc`, uses Ninja as the generator, builds in `Release` and outputs build artifacts to the `build/` subdirectory.
 
-Unlike the user-mode example, the linker flags are not in the preset: all the driver-specific options are in `CMakeLists.txt`.
+Unlike the console application, the linker flags are not in the preset: all the driver-specific options are in `CMakeLists.txt`.
 
 ```json
 {
@@ -87,7 +84,11 @@ Unlike the user-mode example, the linker flags are not in the preset: all the dr
 
 ```cmake
 cmake_minimum_required(VERSION 3.20)
-project(wp81BmsFilter C)
+
+# Use the name of the current source directory as the project/target name
+get_filename_component(APP_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+
+project(${APP_NAME} C)
 
 # Kernel-mode KMDF 1.11 driver for Windows Phone 8.1 (ARM), built with LLVM
 # (clang-cl + lld-link, see CMakePresets.json).
@@ -105,14 +106,14 @@ set(CMAKE_C_STANDARD_LIBRARIES "")
 set(CMAKE_CREATE_CONSOLE_EXE "")
 
 file(GLOB SOURCES CONFIGURE_DEPENDS "src/*.c")
-add_executable(wp81BmsFilter ${SOURCES})
+add_executable(${APP_NAME} ${SOURCES})
 
-set_target_properties(wp81BmsFilter PROPERTIES
+set_target_properties(${APP_NAME} PROPERTIES
     SUFFIX ".sys"
     MSVC_RUNTIME_LIBRARY "MultiThreaded"
 )
 
-target_compile_definitions(wp81BmsFilter PRIVATE
+target_compile_definitions(${APP_NAME} PRIVATE
     _ARM_=1
     _KERNEL_MODE=1
     WINNT=1
@@ -127,14 +128,14 @@ target_compile_definitions(wp81BmsFilter PRIVATE
 
 # SYSTEM -> passed as /imsvc, so warnings inside the kit headers are not reported.
 # um\minwin is only needed for apiset.h; it comes after um so um's ntdef.h wins.
-target_include_directories(wp81BmsFilter SYSTEM PRIVATE
+target_include_directories(${APP_NAME} SYSTEM PRIVATE
     "${WDK_ROOT}/Include/wdf/kmdf/1.${KMDF_MINOR}"
     "${WDK_ROOT}/Include/km/crt"
     "${PHONE_KIT_ROOT}/Include/um"
     "${PHONE_KIT_ROOT}/Include/um/minwin"
 )
 
-target_compile_options(wp81BmsFilter PRIVATE
+target_compile_options(${APP_NAME} PRIVATE
     /W4
     /Zl                 # no default CRT library references
     /GS-                # no stack cookies (FxDriverEntry does not initialise them)
@@ -143,12 +144,12 @@ target_compile_options(wp81BmsFilter PRIVATE
     /clang:-mno-implicit-float   # no compiler-generated VFP/NEON use in kernel code
 )
 
-target_link_directories(wp81BmsFilter PRIVATE
+target_link_directories(${APP_NAME} PRIVATE
     "${WDK_ROOT}/Lib/winv6.3/km/arm"
     "${WDK_ROOT}/Lib/wdf/kmdf/arm/1.${KMDF_MINOR}"
 )
 
-target_link_options(wp81BmsFilter PRIVATE
+target_link_options(${APP_NAME} PRIVATE
     /DRIVER
     /SUBSYSTEM:NATIVE,6.03
     /ENTRY:FxDriverEntry
@@ -162,7 +163,7 @@ target_link_options(wp81BmsFilter PRIVATE
     /TSAWARE:NO
 )
 
-target_link_libraries(wp81BmsFilter PRIVATE
+target_link_libraries(${APP_NAME} PRIVATE
     ntoskrnl.lib
     hal.lib
     BufferOverflowFastFailK.lib
@@ -242,7 +243,7 @@ The include paths and defines must match the ones in `CMakeLists.txt`.
 }
 ```
 
-> Unlike the user-mode example, the include paths are listed one by one (no `/**`): a recursive search would mix user-mode and kernel-mode headers.
+> Unlike the console application example, the include paths are listed one by one (no `/**`): a recursive search would mix user-mode and kernel-mode headers.
 
 ## Source files
 
@@ -272,11 +273,11 @@ cmake --preset arm32-kmdf
 cmake --build build
 ```
 
-The build produces `build\wp81BmsFilter.sys` (ARM Thumb-2, native subsystem 6.3) and `build\wp81BmsFilter.pdb`.
+The build produces `build\MyDriver.sys` (ARM Thumb-2, native subsystem 6.3) and `build\MyDriver.pdb`.
 
 ## Deployment
 
-Copy `build\wp81BmsFilter.sys` to the shared folder of the phone: `C:\Data\USERS\Public\Documents`
+Copy `build\MyDriver.sys` to the shared folder of the phone: `C:\Data\USERS\Public\Documents`
 
 > When you connect your phone with a USB cable, this folder is visible in Windows Explorer on your computer.
 
@@ -284,19 +285,20 @@ Then, from a telnet session on the phone:
 
 1. Copy the driver to the drivers folder:
    ```
-   copy C:\Data\USERS\Public\Documents\wp81BmsFilter.sys C:\Windows\System32\drivers\
+   copy C:\Data\USERS\Public\Documents\MyDriver.sys C:\Windows\System32\drivers\
    ```
 2. Create the service (`Type=1` kernel driver, `Start=3` demand start):
    ```
-   reg add HKLM\SYSTEM\CurrentControlSet\Services\wp81BmsFilter /v Type /t REG_DWORD /d 1
-   reg add HKLM\SYSTEM\CurrentControlSet\Services\wp81BmsFilter /v Start /t REG_DWORD /d 3
-   reg add HKLM\SYSTEM\CurrentControlSet\Services\wp81BmsFilter /v ErrorControl /t REG_DWORD /d 1
-   reg add HKLM\SYSTEM\CurrentControlSet\Services\wp81BmsFilter /v ImagePath /t REG_EXPAND_SZ /d \SystemRoot\System32\drivers\wp81BmsFilter.sys
+   reg add HKLM\SYSTEM\CurrentControlSet\Services\MyDriver /v Type /t REG_DWORD /d 1
+   reg add HKLM\SYSTEM\CurrentControlSet\Services\MyDriver /v Start /t REG_DWORD /d 3
+   reg add HKLM\SYSTEM\CurrentControlSet\Services\MyDriver /v ErrorControl /t REG_DWORD /d 1
+   reg add HKLM\SYSTEM\CurrentControlSet\Services\MyDriver /v ImagePath /t REG_EXPAND_SZ /d \SystemRoot\System32\drivers\MyDriver.sys
    ```
 3. Attach the driver to its device. For a filter driver, add its service name to the `UpperFilters` (or `LowerFilters`) value (`REG_MULTI_SZ`) of the device instance under `HKLM\SYSTEM\CurrentControlSet\Enum\...`. If the value already exists, append to it; don't replace it.
 4. Reboot the phone (or restart the device) so that the device stack is rebuilt with the driver.
 
-The driver must be signed in a way the device accepts (or test signing enabled).
+The driver must be signed in a way the device accepts (or test signing enabled).  
+See the [Signing on the computer section](https://github.com/fredericGette/wp81documentation/blob/main/DriverBuilding/README.md#signing-on-the-computer).
 
 ## Troubleshoot
 
