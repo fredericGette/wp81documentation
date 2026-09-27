@@ -24,7 +24,7 @@ using the same toolchain as the [console application](https://github.com/frederi
 ## Project structure
 
 ```
-wp81BmsFilter/
+MyDriver/
 ├── .vscode/
 │   └── c_cpp_properties.json   ← IntelliSense configuration
 ├── src/
