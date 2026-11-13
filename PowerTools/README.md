@@ -48,7 +48,7 @@ The packages come from the update servers, not from the PC. If the servers don't
 
 ### Option B: manual installation
 
-1. Unzip PowerToolsPackages.zip on the PC.  
+1. Unzip [PowerToolsPackages.zip](https://github.com/fredericGette/wp81documentation/blob/main/PowerTools/PowerToolsPackages.zip) on the PC.  
 2. Copy the folder to the phone, for example to `C:\Data\Users\Public\PowerToolsPackages`.
 3. In the command prompt of the phone:
 
