@@ -23,6 +23,8 @@ Various documentation about Windows Phone 8.1
 
 [Performances](Performances/README.md)
 
+[Windows Phone Developer Power Tools](PowerTools/README.md)
+
 ## Miscellaneous
 
 ### Take a screenshoot
