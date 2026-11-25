@@ -62,6 +62,10 @@ Execute step 1 and 2 only once in your environment. Only step 3 must be executed
 "C:\Program Files (x86)\Windows Kits\8.1\bin\x86\signtool.exe" sign /v /fd sha256 /s PrivateCertStore /n Wp81TestSigning MyDriver.sys
 ```
 
+> [!NOTE]
+> Instead of `makecert.exe` and `certmgr.exe` you can use `New-SelfSignedCertificate` in Powershell and Windows 10:  
+> `New-SelfSignedCertificate -Subject "CN=Wp81TestSigning" -Type CodeSigningCert -KeyAlgorithm RSA -KeyLength 2048 -HashAlgorithm SHA256 -CertStoreLocation Cert:\CurrentUser\My`
+
 ## Deploy and start the driver on the phone
 
 Copy the .sys file in the shared folder of the phone: `C:\Data\USERS\Public\Documents`  
