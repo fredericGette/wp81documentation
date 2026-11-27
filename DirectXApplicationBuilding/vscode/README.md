@@ -1,7 +1,6 @@
 # How to build a Windows Phone DirectX 11 application with VSCode, LLVM, CMake and Ninja
 
 This page explains how to build a Windows Phone 8.1 DirectX 11 application (an `.appx` package with a `CoreWindow`, Direct3D 11, Direct2D and DirectWrite) without Visual Studio.  
-The starting point is the Visual Studio 2015 project template *DirectX 11 App (Windows Phone 8.1)*: a spinning colored cube with an FPS counter. The example project is called `wp81LlvmDxTest`.
 
 Compared to a [console application](../../ConsoleApplicationBuilding/vscode/README.md), a DirectX application needs four more things:
 - the Visual Studio template is written in C++/CX, which clang doesn't support,
