@@ -1,6 +1,7 @@
 # How to build a Windows Phone DirectX 11 application with VSCode, LLVM, CMake and Ninja
 
 This page explains how to build a Windows Phone 8.1 DirectX 11 application (an `.appx` package with a `CoreWindow`, Direct3D 11, Direct2D and DirectWrite) without Visual Studio.  
+The Visual Studio template mentioned in this file is the basic example created with Visua Studio 2015.
 
 Compared to a [console application](../../ConsoleApplicationBuilding/vscode/README.md), a DirectX application needs four more things:
 - the Visual Studio template is written in C++/CX, which clang doesn't support,
@@ -156,7 +157,7 @@ HRESULT App::OnWindowClosed(ICoreWindow* sender, ICoreWindowEventArgs* args)
 
 ### Loading files without PPL tasks
 
-The template loads the shaders with `ReadDataAsync` (`StorageFile` + PPL tasks). Here the file is read synchronously with `CreateFile2` / `ReadFile` in the installation folder of the package, whose path comes from `Windows.ApplicationModel.Package.Current.InstalledLocation`:
+The Visual Studio template loads the shaders with `ReadDataAsync` (`StorageFile` + PPL tasks). Here the file is read synchronously with `CreateFile2` / `ReadFile` in the installation folder of the package, whose path comes from `Windows.ApplicationModel.Package.Current.InstalledLocation`:
 
 ```cpp
 ComPtr<IPackageStatics> statics;
@@ -186,7 +187,7 @@ void DX::FailFast(HRESULT hr, const char* file, int line)
 
 The log file is in the `LocalState` folder of the application (`Windows.Storage.ApplicationData.Current.LocalFolder`):  
 `C:\Data\Users\DefApps\APPDATA\Local\Packages\<Identity Name>_<publisher hash>\LocalState\log.txt`  
-This is very useful because there's no debugger: read this file with SSH or telnet when the application closes immediately.
+This is very useful because there's no debugger: read this file with SSH when the application closes immediately.
 
 `ExitProcess` is exported by `mincore.lib` but hidden by the `WINAPI_FAMILY_PHONE_APP` partition, so it's declared manually:
 
@@ -258,7 +259,7 @@ The application uses `MSVCR110.dll` and `MSVCP110.dll` of the phone, so the pack
 The Lumia GPUs use the feature level 9_3 of Direct3D: shaders must be compiled with the `vs_4_0_level_9_3` / `ps_4_0_level_9_3` profiles. LLVM has no HLSL compiler, and `dxc.exe` can't produce these profiles, so `fxc.exe` is used. If CMake doesn't find it, the `.cso` files of `shaders/prebuilt/` are copied instead.
 
 ```cmake
-file(GLOB FXC_HINTS "C:/Program Files (x86)/Windows Kits/10/bin/*/x64" "C:/Program Files (x86)/Windows Kits/10/bin/*/x86")
+file(GLOB FXC_HINTS "C:/Program Files (x86)/Windows Kits/8.1/bin/*/x64" "C:/Program Files (x86)/Windows Kits/8.1/bin/*/x86")
 find_program(FXC_EXECUTABLE fxc HINTS ${FXC_HINTS})
 
 add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/SampleVertexShader.cso"
@@ -363,7 +364,7 @@ To uninstall: `TH.exe {<ProductID>} -u`.
 
 ## Start the application
 
-Start the application from the application list of the phone, or from an SSH/telnet session with `wp81LaunchApp.exe`, a small console application (built like the [console applications with vscode](../../ConsoleApplicationBuilding/vscode/README.md)):
+Start the application from the application list of the phone, or from an SSH session with `wp81LaunchApp.exe`, a small console application (built like the [console applications with vscode](../../ConsoleApplicationBuilding/vscode/README.md)):
 
 ```
 ssh user@<phone-ip> "C:\Data\Users\Public\wp81LaunchApp.exe 4eaac987-b40b-4fde-a9d3-b415812ccd74_fkkem3zpb3x42!App"
