@@ -336,7 +336,8 @@ Or `[F7]` in VSCode. The result is `build\wp81LlvmDxTest.exe` and `build\wp81Llv
 
 ## Installation
 
-Copy the package to the phone, then deploy it with `TH.exe`. The `-di` option deploys an unsigned (developer) package; if it's already deployed, TH.exe undeploys it and deploys it again.
+Copy the package to the phone, then deploy it with `TH.exe`. The `-di` option deploys an unsigned (developer) package.
+To deploy a new build with the same version, uninstall the application first (`TH.exe {<ProductID>} -u`, this deletes its data); otherwise TH.exe fails with `0x81030137` (*Package is not valid or not applicable for application update*). Or increase the `Version` of the manifest.
 
 ```
 scp build/wp81LlvmDxTest_1.0.0.0_ARM.appx user@<phone-ip>:C:/Data/Users/Public/wp81LlvmDxTest.appx
@@ -407,6 +408,37 @@ HRESULT hr = manager->ActivateApplication(aumid, L"", 0, &pid);
 > `TH.exe <package> -r` and `TestNavigationApi.exe LaunchModernApplication <AUMID> <TileID>` don't work from an SSH session, even with `TestNavigationApi.exe` copied to `C:\Data\Test\bin` from the test package `Microsoft.MS_TEST.MSN.Data.spkg`. TestNavigationApi first connects to the navigation server endpoint `System\NavigationServer_TestSessionManager` (created by `CoreUIComponents.dll`). This connection fails, and the tool exits without any message after `Entering testnavigationapi / LaunchModernApplication`.
 
 Check that the application started with its log file (see [Troubleshoot](#troubleshoot)): each start adds a line `wp81LlvmDxTest started`.
+
+## Suspend, resume and close the application
+
+A WinRT application has no "please exit" message: the system closes an application by **suspending** it (the application receives its `Suspending` event and saves its state), then by **terminating** the suspended process. `wp81LaunchApp.exe` does the same with `IPackageDebugSettings`, the interface Visual Studio uses for *Suspend*, *Resume* and *Suspend and shutdown*:
+
+```
+wp81LaunchApp /state     <AUMID|PackageFullName>
+wp81LaunchApp /suspend   <AUMID|PackageFullName>
+wp81LaunchApp /resume    <AUMID|PackageFullName>
+wp81LaunchApp /terminate <AUMID|PackageFullName>     no Suspending event
+wp81LaunchApp /close     <AUMID|PackageFullName>     suspend, then terminate
+```
+```
+> wp81LaunchApp /close 4eaac987-b40b-4fde-a9d3-b415812ccd74_fkkem3zpb3x42!App
+Package: 4eaac987-b40b-4fde-a9d3-b415812ccd74_1.0.0.0_arm__fkkem3zpb3x42
+Suspend: hr=0x00000001 state=suspended
+TerminateAllProcesses: hr=0x00000000 state=terminated
+```
+
+The phone's `AppXExecutionClient.dll` implements the `PackageDebugSettings` class (`{B1AEC16F-2383-4852-B0E9-8F0B1DC66B4D}`) with the same `IPackageDebugSettings` interface as Windows 8.1 desktop (`{F27C3930-8029-4AD1-94E3-3DBA417810C1}`, `shobjidl.h`): `Suspend`, `Resume`, `TerminateAllProcesses` and `GetPackageExecutionState` take the **package full name**. The object is created like the activation class above (`DllGetClassObject` when `CoCreateInstance` fails). The AUMID is converted to a package full name with `ParseApplicationUserModelId` and `FindPackagesByPackageFamily`. They aren't in the import libraries of the Windows Phone SDK, so they're loaded at runtime from `api-ms-win-appmodel-runtime-l1-1-1.dll`.
+
+The template's `OnSuspending` / `OnResuming` handlers can log a line, to check the lifecycle in the log file:
+
+```
+wp81LlvmDxTest started
+Suspending
+Resuming
+Suspending
+```
+
+As a last resort for a process that doesn't respond: `tlist` lists the processes, and `kill <pid>` ends one (without `Suspending` event).
 
 ## Troubleshoot
 
