@@ -12,8 +12,8 @@ Compared to a [console application](../../ConsoleApplicationBuilding/vscode/READ
 
 - Everything listed for the [console application with vscode](../../ConsoleApplicationBuilding/vscode/README.md#requirements): LLVM, CMake, Ninja, VSCode, the Windows Phone 8.1 SDK and the Visual Studio 11.0 (VS 2012) WPSDK headers and libraries.
 - [Python 3](https://www.python.org/), to create the `.appx`.
-- `fxc.exe` (the Direct3D shader compiler of the Windows SDK), for example in `C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\` (fxc version 6.3.9600 with its `d3dcompiler_47.dll`). It's optional: the project can use precompiled shaders instead.
-- To install the application: an [SSH server on the phone](https://github.com/fredericGette/wp81Sshd) (or the [telnet server](../../telnetOverUsb/README.md) + [FTP](../../ftpOverUsb/README.md)) and `TH.exe` (Microsoft test tool copied into `C:\Windows\System32` by CMD Injector).
+- `fxc.exe` (the Direct3D shader compiler of the Windows SDK). The recommended version is 6.3.9600 with its `d3dcompiler_47.dll`. The project can use precompiled shaders also.
+- To install the application: an [SSH server on the phone](https://github.com/fredericGette/wp81Sshd) and `TH.exe` (Microsoft test tool copied into `C:\Windows\System32` by [CMD.Injector_WP8](https://github.com/fadilfadz01/CMD.Injector_WP8)).
 
 ## Project structure
 
