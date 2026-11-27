@@ -16,6 +16,8 @@ Various documentation about Windows Phone 8.1
 
 [XAML application creation](XamlApplicationBuilding/README.md)
 
+[DirectX application creation with vscode](DirectXApplicationBuilding/vscode/README.md)
+
 [Kernel driver creation](DriverBuilding/README.md)  
 [Kernel driver creation with vscode](DriverBuilding/vscode/README.md)
 
